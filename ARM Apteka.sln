@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ARM_Apteka", "ARM Apteka\ARM_Apteka.csproj", "{98D7BECF-0415-482E-850C-34E9F931D426}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{EA0C84B7-523E-4C74-97AC-545F68EDAD15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98D7BECF-0415-482E-850C-34E9F931D426}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D7BECF-0415-482E-850C-34E9F931D426}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D7BECF-0415-482E-850C-34E9F931D426}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D7BECF-0415-482E-850C-34E9F931D426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA0C84B7-523E-4C74-97AC-545F68EDAD15}.Debug|Any CPU.ActiveCfg = Debug
+		{EA0C84B7-523E-4C74-97AC-545F68EDAD15}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D83524E-C8DD-4C39-B06C-62DE6F8A54FF}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,83 @@
+﻿<Page x:Class="ARM_Apteka.Views.AuthorizationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ARM_Apteka.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      WindowTitle="Наша аптека"
+      Title="AuthorizationPage">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0 15 0 0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Content" Value="SIGN IN"/>
+            <Setter Property="Margin" Value="0 50 0 0"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="AuthoStackPanel">
+            <TextBlock>Логин</TextBlock>
+            <TextBox x:Name="LoginTextBox" TabIndex="0" >
+                <TextBox.Style>
+                    <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                        <Setter Property="Height" Value="30"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="Margin" Value="0 15 0 15"/>
+                        <Setter Property="Width" Value="300"/>
+
+                        <Style.Resources>
+                            <VisualBrush x:Key="PlaceholderStyle">
+                                <VisualBrush.Visual>
+                                    <Label Foreground="Gray" ClipToBounds="True">
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Content" Value="Введите логин"/>
+                                                <Setter Property="Width" Value="160"/>
+                                                <Setter Property="Height" Value="30"/>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource PlaceholderStyle}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource PlaceholderStyle}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+
+            <TextBlock>Пароль</TextBlock>
+            <PasswordBox x:Name="PasswordPasswordBox" TabIndex="1"></PasswordBox>
+
+            <Button x:Name="SignInbutton" TabIndex="2"  Click="SignInbutton_Click" ></Button>
+
+            
+        </StackPanel>
+    </Grid>
+</Page>

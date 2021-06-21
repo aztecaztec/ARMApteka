@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f7e0967bb584481994653b98fe063236" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Model.ATC" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="Model.Drugs" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="Model.Drugs_img" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="Model.Drugs_property" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="Model.Groups" Width="1.5" PointX="7.75" PointY="1.875" />
+        <EntityTypeShape EntityType="Model.Property" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.Sellings" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="Model.Users" Width="1.5" PointX="10" PointY="1.625" />
+        <AssociationConnector Association="Model.FK_Drugs_ATC" />
+        <AssociationConnector Association="Model.FK_drug_img_drug" />
+        <AssociationConnector Association="Model.FK_drug_property_drug" />
+        <AssociationConnector Association="Model.FK_selling_drug" />
+        <AssociationConnector Association="Model.FK_drug_property_property" />
+        <AssociationConnector Association="Model.FK_user_group" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,34 @@
+﻿<Window x:Class="ARM_Apteka.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ARM_Apteka"
+        mc:Ignorable="d"
+        Icon="Resources/logo_img.png"
+        Title="АРМ °Наша аптека° " MinHeight="600" Height="600" MinWidth="900" Width="900">
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="85*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="{StaticResource SecondColor}" Grid.Row="0" Grid.RowSpan="2" Opacity="0.5"/>
+        <Rectangle Fill="{StaticResource MainColor}" Grid.Row="0" Grid.ColumnSpan="2"></Rectangle>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2">
+            <Image Source="Resources/logo_img.png" Style="{StaticResource LogoImg}"/>
+            
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock Style="{StaticResource HeaderTextBlock}" Foreground="{StaticResource WhiteTextColor}"> Наша аптека</TextBlock>
+
+        </StackPanel>
+        <Button x:Name="ButtonBack" Grid.Column="1" HorizontalAlignment="Right"  Click="ButtonBack_Click" >
+            Назад
+        </Button>
+        <Frame  x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"  >
+
+        </Frame>
+    </Grid>
+</Window>

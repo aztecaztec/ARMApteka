@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ATC">
+          <Key>
+            <PropertyRef Name="ATCCode" />
+          </Key>
+          <Property Name="ATCCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RusName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EngName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ParentATCCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Drugs">
+          <Key>
+            <PropertyRef Name="drug_id" />
+          </Key>
+          <Property Name="drug_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="drug_name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="drug_count" Type="int" Nullable="false" />
+          <Property Name="drug_price" Type="float" Nullable="false" />
+          <Property Name="atc_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="discount" Type="float" />
+        </EntityType>
+        <EntityType Name="Drugs_img">
+          <Key>
+            <PropertyRef Name="img_id" />
+          </Key>
+          <Property Name="img_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="img" Type="image" />
+          <Property Name="drug_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Drugs_property">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="drug_id" Type="int" Nullable="false" />
+          <Property Name="property_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="property" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sellings">
+          <Key>
+            <PropertyRef Name="sell_id" />
+          </Key>
+          <Property Name="sell_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="drug_id" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="fullprice" Type="float" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="user_group" Type="int" Nullable="false" />
+          <Property Name="login" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_drug_img_drug">
+          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Drugs_img" Type="Self.Drugs_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Drugs_img">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_drug_property_drug">
+          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Drugs_property" Type="Self.Drugs_property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Drugs_property">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_drug_property_property">
+          <End Role="Property" Type="Self.Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Drugs_property" Type="Self.Drugs_property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Drugs_property">
+              <PropertyRef Name="property_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Drugs_ATC">
+          <End Role="ATC" Type="Self.ATC" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Drugs" Type="Self.Drugs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATC">
+              <PropertyRef Name="ATCCode" />
+            </Principal>
+            <Dependent Role="Drugs">
+              <PropertyRef Name="atc_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_selling_drug">
+          <End Role="Drugs" Type="Self.Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Sellings" Type="Self.Sellings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Sellings">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_group">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="user_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="ATC" EntityType="Self.ATC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drugs" EntityType="Self.Drugs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drugs_img" EntityType="Self.Drugs_img" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drugs_property" EntityType="Self.Drugs_property" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sellings" EntityType="Self.Sellings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_drug_img_drug" Association="Self.FK_drug_img_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Drugs_img" EntitySet="Drugs_img" />
+          </AssociationSet>
+          <AssociationSet Name="FK_drug_property_drug" Association="Self.FK_drug_property_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Drugs_property" EntitySet="Drugs_property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_drug_property_property" Association="Self.FK_drug_property_property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="Drugs_property" EntitySet="Drugs_property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Drugs_ATC" Association="Self.FK_Drugs_ATC">
+            <End Role="ATC" EntitySet="ATC" />
+            <End Role="Drugs" EntitySet="Drugs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_selling_drug" Association="Self.FK_selling_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Sellings" EntitySet="Sellings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_group" Association="Self.FK_user_group">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ATC" EntityType="Model.ATC" />
+          <EntitySet Name="Drugs" EntityType="Model.Drugs" />
+          <EntitySet Name="Drugs_img" EntityType="Model.Drugs_img" />
+          <EntitySet Name="Drugs_property" EntityType="Model.Drugs_property" />
+          <EntitySet Name="Groups" EntityType="Model.Groups" />
+          <EntitySet Name="Property" EntityType="Model.Property" />
+          <EntitySet Name="Sellings" EntityType="Model.Sellings" />
+          <EntitySet Name="Users" EntityType="Model.Users" />
+          <AssociationSet Name="FK_Drugs_ATC" Association="Model.FK_Drugs_ATC">
+            <End Role="ATC" EntitySet="ATC" />
+            <End Role="Drugs" EntitySet="Drugs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_drug_img_drug" Association="Model.FK_drug_img_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Drugs_img" EntitySet="Drugs_img" />
+          </AssociationSet>
+          <AssociationSet Name="FK_drug_property_drug" Association="Model.FK_drug_property_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Drugs_property" EntitySet="Drugs_property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_selling_drug" Association="Model.FK_selling_drug">
+            <End Role="Drugs" EntitySet="Drugs" />
+            <End Role="Sellings" EntitySet="Sellings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_drug_property_property" Association="Model.FK_drug_property_property">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="Drugs_property" EntitySet="Drugs_property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_group" Association="Model.FK_user_group">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ATC">
+          <Key>
+            <PropertyRef Name="ATCCode" />
+          </Key>
+          <Property Name="ATCCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RusName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EngName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ParentATCCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Drugs" Relationship="Model.FK_Drugs_ATC" FromRole="ATC" ToRole="Drugs" />
+        </EntityType>
+        <EntityType Name="Drugs">
+          <Key>
+            <PropertyRef Name="drug_id" />
+          </Key>
+          <Property Name="drug_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="drug_name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="drug_count" Type="Int32" Nullable="false" />
+          <Property Name="drug_price" Type="Double" Nullable="false" />
+          <Property Name="atc_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="discount" Type="Double" />
+          <NavigationProperty Name="ATC" Relationship="Model.FK_Drugs_ATC" FromRole="Drugs" ToRole="ATC" />
+          <NavigationProperty Name="Drugs_img" Relationship="Model.FK_drug_img_drug" FromRole="Drugs" ToRole="Drugs_img" />
+          <NavigationProperty Name="Drugs_property" Relationship="Model.FK_drug_property_drug" FromRole="Drugs" ToRole="Drugs_property" />
+          <NavigationProperty Name="Sellings" Relationship="Model.FK_selling_drug" FromRole="Drugs" ToRole="Sellings" />
+        </EntityType>
+        <EntityType Name="Drugs_img">
+          <Key>
+            <PropertyRef Name="img_id" />
+          </Key>
+          <Property Name="img_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="img" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="drug_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Drugs" Relationship="Model.FK_drug_img_drug" FromRole="Drugs_img" ToRole="Drugs" />
+        </EntityType>
+        <EntityType Name="Drugs_property">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="drug_id" Type="Int32" Nullable="false" />
+          <Property Name="property_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Drugs" Relationship="Model.FK_drug_property_drug" FromRole="Drugs_property" ToRole="Drugs" />
+          <NavigationProperty Name="Property" Relationship="Model.FK_drug_property_property" FromRole="Drugs_property" ToRole="Property" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_user_group" FromRole="Groups" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="property1" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Drugs_property" Relationship="Model.FK_drug_property_property" FromRole="Property" ToRole="Drugs_property" />
+        </EntityType>
+        <EntityType Name="Sellings">
+          <Key>
+            <PropertyRef Name="sell_id" />
+          </Key>
+          <Property Name="sell_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="drug_id" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fullprice" Type="Double" />
+          <NavigationProperty Name="Drugs" Relationship="Model.FK_selling_drug" FromRole="Sellings" ToRole="Drugs" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="user_group" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="Model.FK_user_group" FromRole="Users" ToRole="Groups" />
+        </EntityType>
+        <Association Name="FK_Drugs_ATC">
+          <End Type="Model.ATC" Role="ATC" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Drugs" Role="Drugs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ATC">
+              <PropertyRef Name="ATCCode" />
+            </Principal>
+            <Dependent Role="Drugs">
+              <PropertyRef Name="atc_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_drug_img_drug">
+          <End Type="Model.Drugs" Role="Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Drugs_img" Role="Drugs_img" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Drugs_img">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_drug_property_drug">
+          <End Type="Model.Drugs" Role="Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Drugs_property" Role="Drugs_property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Drugs_property">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_selling_drug">
+          <End Type="Model.Drugs" Role="Drugs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Sellings" Role="Sellings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drugs">
+              <PropertyRef Name="drug_id" />
+            </Principal>
+            <Dependent Role="Sellings">
+              <PropertyRef Name="drug_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_drug_property_property">
+          <End Type="Model.Property" Role="Property" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Drugs_property" Role="Drugs_property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Drugs_property">
+              <PropertyRef Name="property_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_group">
+          <End Type="Model.Groups" Role="Groups" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="user_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="ATC">
+            <EntityTypeMapping TypeName="Model.ATC">
+              <MappingFragment StoreEntitySet="ATC">
+                <ScalarProperty Name="ParentATCCode" ColumnName="ParentATCCode" />
+                <ScalarProperty Name="EngName" ColumnName="EngName" />
+                <ScalarProperty Name="RusName" ColumnName="RusName" />
+                <ScalarProperty Name="ATCCode" ColumnName="ATCCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drugs">
+            <EntityTypeMapping TypeName="Model.Drugs">
+              <MappingFragment StoreEntitySet="Drugs">
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="atc_code" ColumnName="atc_code" />
+                <ScalarProperty Name="drug_price" ColumnName="drug_price" />
+                <ScalarProperty Name="drug_count" ColumnName="drug_count" />
+                <ScalarProperty Name="drug_name" ColumnName="drug_name" />
+                <ScalarProperty Name="drug_id" ColumnName="drug_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drugs_img">
+            <EntityTypeMapping TypeName="Model.Drugs_img">
+              <MappingFragment StoreEntitySet="Drugs_img">
+                <ScalarProperty Name="drug_id" ColumnName="drug_id" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="img_id" ColumnName="img_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drugs_property">
+            <EntityTypeMapping TypeName="Model.Drugs_property">
+              <MappingFragment StoreEntitySet="Drugs_property">
+                <ScalarProperty Name="property_id" ColumnName="property_id" />
+                <ScalarProperty Name="drug_id" ColumnName="drug_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="Model.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Property">
+            <EntityTypeMapping TypeName="Model.Property">
+              <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="property1" ColumnName="property" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sellings">
+            <EntityTypeMapping TypeName="Model.Sellings">
+              <MappingFragment StoreEntitySet="Sellings">
+                <ScalarProperty Name="fullprice" ColumnName="fullprice" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="drug_id" ColumnName="drug_id" />
+                <ScalarProperty Name="sell_id" ColumnName="sell_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="user_group" ColumnName="user_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

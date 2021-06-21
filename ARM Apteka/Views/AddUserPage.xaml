@@ -1,0 +1,31 @@
+﻿<Page x:Class="ARM_Apteka.Views.AddUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ARM_Apteka.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddUserPage">
+
+    <Grid>
+        <StackPanel Width="200" VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource HeaderTextBlock}" TextWrapping="Wrap">Добавление нового пользователя</TextBlock>
+            <TextBlock>Логин:</TextBlock>
+            <TextBox x:Name="LoginTextBox"></TextBox>
+            <TextBlock>Имя:</TextBlock>
+            <TextBox x:Name="NameTextBox"></TextBox>
+            <TextBlock>E-mail:</TextBlock>
+            <TextBox x:Name="EmailTextBox"></TextBox>
+            <TextBlock>Группа:</TextBlock>
+            <ComboBox x:Name="GroupComboBox">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="RegistrationButton" Click="RegistrationButton_Click" Style="{StaticResource AccentButton}">Добавить</Button>
+        </StackPanel>
+    </Grid>
+</Page>
